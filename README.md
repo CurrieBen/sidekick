@@ -60,7 +60,7 @@ directory you choose to create the tasks.txt file.
 These settings were designed so you can customise them and use different paths depending on the environment you are
 working in etc.
 
-Once this is done, you will need to makemigrations and migrate to create the side kick models which you can then manage 
+Once this is done, you will need to migrate to create the side kick models which you can then manage 
 through the django admin.
 
 The basic set up is now complete!
