@@ -149,7 +149,7 @@ You can do this by connecting to your server and then:
 
     cd /etc/cron.d
     touch sidekick_tasks
-    ln -sf sidekick_tasks /var/www/myproject/path/to/tasks.txt
+    ln -sf /etc/cron.d/sidekick_tasks /var/www/myproject/path/to/tasks.txt
     
 Once this is done then you're all good to go, you can now register tasks with a simple decorator and easily 
 manage them using django admin.
