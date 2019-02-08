@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: side-kick
-Version: 0.1.1
+Version: 0.1.2
 Summary: A lightweight task runner for django with easy admin controls
 Home-page: https://github.com/CurrieBen/sidekick
 Author: Ben Currie
@@ -68,7 +68,7 @@ Description: # Side Kick
         These settings were designed so you can customise them and use different paths depending on the environment you are
         working in etc.
         
-        Once this is done, you will need to makemigrations and migrate to create the side kick models which you can then manage 
+        Once this is done, you will need to migrate to create the side kick models which you can then manage 
         through the django admin.
         
         The basic set up is now complete!
@@ -157,7 +157,7 @@ Description: # Side Kick
         
             cd /etc/cron.d
             touch sidekick_tasks
-            ln -sf sidekick_tasks /var/www/myproject/path/to/tasks.txt
+            ln -sf /var/www/myproject/path/to/tasks.txt /etc/cron.d/sidekick_tasks
             
         Once this is done then you're all good to go, you can now register tasks with a simple decorator and easily 
         manage them using django admin.
