@@ -6,8 +6,6 @@ class SidekickConfig(AppConfig):
     name = 'sidekick'
 
     def ready(self):
-        import sidekick.signals.post_save
-
         self.register_tasks()
 
     @staticmethod
