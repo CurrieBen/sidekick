@@ -14,11 +14,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='task',
             name='cron_schedule',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='sidekick.CronSchedule'),
+            field=models.ForeignKey(null=True, blank=True, on_delete=django.db.models.deletion.DO_NOTHING, to='sidekick.CronSchedule'),
         ),
         migrations.AlterField(
             model_name='task',
             name='registered_task',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='sidekick.RegisteredTask'),
+            field=models.ForeignKey(null=True, blank=True, on_delete=django.db.models.deletion.CASCADE, to='sidekick.RegisteredTask'),
         ),
     ]

@@ -9,8 +9,8 @@ class Task(models.Model):
     """Task model used to define tasks that will be run as cron jobs """
 
     name = models.CharField(max_length=255, help_text='The human readable name of the task')
-    registered_task = models.ForeignKey('sidekick.RegisteredTask', null=True, on_delete=models.CASCADE)
-    cron_schedule = models.ForeignKey('sidekick.CronSchedule', null=True, on_delete=models.DO_NOTHING)
+    registered_task = models.ForeignKey('sidekick.RegisteredTask', null=True, blank=True, on_delete=models.CASCADE)
+    cron_schedule = models.ForeignKey('sidekick.CronSchedule', null=True, blank=True, on_delete=models.DO_NOTHING)
     enabled = models.BooleanField(default=False, help_text='Whether the task is enabled')
 
     def __str__(self):
