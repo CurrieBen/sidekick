@@ -1,5 +1,4 @@
 from django.db import models
-from sidekick.services.cron_files import CronService
 
 import logging
 
@@ -26,6 +25,7 @@ class Task(models.Model):
 
         """Task Post Save"""
         try:
+            from sidekick.services.cron_files import CronService
             CronService().generate_cron_tasks()
         except Exception as e:
             logger.error(msg='Failed to generate cron task for {} due to {}'.format(self, e))
