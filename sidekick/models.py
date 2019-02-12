@@ -1,16 +1,34 @@
 from django.db import models
+from sidekick.services.cron_files import CronService
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class Task(models.Model):
     """Task model used to define tasks that will be run as cron jobs """
 
     name = models.CharField(max_length=255, help_text='The human readable name of the task')
-    registered_task = models.ForeignKey('sidekick.RegisteredTask', on_delete=models.CASCADE)
-    cron_schedule = models.ForeignKey('sidekick.CronSchedule', on_delete=models.DO_NOTHING)
+    registered_task = models.ForeignKey('sidekick.RegisteredTask', null=True, on_delete=models.CASCADE)
+    cron_schedule = models.ForeignKey('sidekick.CronSchedule', null=True, on_delete=models.DO_NOTHING)
     enabled = models.BooleanField(default=False, help_text='Whether the task is enabled')
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        """Task Pre Save"""
+        if not self.registered_task or not self.cron_schedule:
+            self.enabled = False
+
+        super(Task, self).save(*args, **kwargs)
+
+        """Task Post Save"""
+        try:
+            CronService().generate_cron_tasks()
+        except Exception as e:
+            logger.error(msg='Failed to generate cron task for {} due to {}'.format(self, e))
 
     def task_of(self):
         """The app which this task belongs to """
