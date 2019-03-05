@@ -8,28 +8,28 @@ def do_func(apps, schema_editor):
     db_alias = schema_editor.connection.alias
     CronSchedule.objects.using(db_alias).bulk_create([
         CronSchedule(name="Every 5 minutes all day",
-                     minute="/5",
+                     minute="*/5",
                      hour="*",
                      day_of_week="*",
                      day_of_month="*",
                      month_of_year="*"
                      ),
         CronSchedule(name="Every 10 minutes all day",
-                     minute="/10",
+                     minute="*/10",
                      hour="*",
                      day_of_week="*",
                      day_of_month="*",
                      month_of_year="*"
                      ),
         CronSchedule(name="Every 15 minutes all day",
-                     minute="/15",
+                     minute="*/15",
                      hour="*",
                      day_of_week="*",
                      day_of_month="*",
                      month_of_year="*"
                      ),
         CronSchedule(name="Every 30 minutes all day",
-                     minute="/30",
+                     minute="*/30",
                      hour="*",
                      day_of_week="*",
                      day_of_month="*",
