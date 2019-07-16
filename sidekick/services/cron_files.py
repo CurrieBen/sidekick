@@ -41,13 +41,15 @@ class CronService:
                         schedule=task.cron_schedule.schedule(),
                         task=task.registered_task.task_name)
                 )
-                update_task_status(task_name=task.name, status='SLEEPING')
 
     def generate_cron_tasks(self):
         """Create a new cron file on the post save of a Registered Task"""
         try:
             tasks = Task.objects.filter(enabled=True)
             self.write_cron_file(tasks=tasks)
+            sleeping_tasks = Task.objects.filter(enabled=False)
+            for st in sleeping_tasks:
+                update_task_status(task_name=st.name, status=Task.SLEEPING)
             logger.info(msg='Cron tasks successfully created.')
         except Exception as e:
             logger.error(msg='Failed to write cron tasks due to {}'.format(e))

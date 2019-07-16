@@ -26,8 +26,8 @@ class Task(models.Model):
     cron_schedule = models.ForeignKey('sidekick.CronSchedule', null=True, blank=True, on_delete=models.DO_NOTHING)
     enabled = models.BooleanField(default=False, help_text='Whether the task is enabled')
     status = models.CharField(max_length=11, choices=CURRENT_STATUS, default=SLEEPING)
-    started_at = models.DateTimeField(null=True, blank=True, timezone=timezone.utc)
-    finished_at = models.DateTimeField(null=True, blank=True, timezone=timezone.utc)
+    started_at = models.DateTimeField(null=True, blank=True)
+    finished_at = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.name
