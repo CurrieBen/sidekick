@@ -155,4 +155,4 @@ Once this is done then you're all good to go, you can now register tasks with a 
 manage them using django admin.
 
 
-![Side Kick Admin Example](sidekick/static/images/SideKickAdmin.png?raw=true "Side Kick Admin Example")
+![Side Kick Admin Example](./sidekick/static/images/SideKickAdmin.png?raw=true "Side Kick Admin Example")

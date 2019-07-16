@@ -1,7 +1,10 @@
 import logging
 
-from sidekick.models import Task
 from django.conf import settings
+
+from sidekick.models import Task
+from sidekick.services.helpers import update_task_status
+
 
 logger = logging.getLogger(__name__)
 
@@ -38,6 +41,7 @@ class CronService:
                         schedule=task.cron_schedule.schedule(),
                         task=task.registered_task.task_name)
                 )
+                update_task_status(task_name=task.name, status='SLEEPING')
 
     def generate_cron_tasks(self):
         """Create a new cron file on the post save of a Registered Task"""

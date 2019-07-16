@@ -1,6 +1,8 @@
 """
 Helper functions to make the code quicker to write and easier for others to read
 """
+from datetime import datetime, timezone
+from sidekick.models import Task
 
 
 def get_task_name(options):
@@ -20,3 +22,14 @@ def get_app_name(name):
     :return: App name
     """
     return name.split('.')[-1]
+
+
+def update_task_status(task_name, status):
+    """Update the status, started_at and finished_at fields"""
+
+    if status == Task.IN_PROGRESS:
+        Task.objects.filter(name=task_name).update(status=status, started_at=datetime.now(timezone.utc))
+    elif status in {Task.SUCCESS, Task.FAILED}:
+        Task.objects.filter(name=task_name).update(status=status, finished_at=datetime.now(timezone.utc))
+    else:
+        Task.objects.filter(name=task_name).update(status=status, started_at=None, finished_at=None)

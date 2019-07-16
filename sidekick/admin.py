@@ -24,7 +24,7 @@ class TaskAdmin(admin.ModelAdmin):
     """
     Admin for the task model
     """
-    list_display = ['name', 'registered_task', 'cron_schedule', 'enabled']
+    list_display = ['name', 'registered_task', 'status', 'running_for', 'cron_schedule', 'enabled']
 
 
 admin.site.register(Task, TaskAdmin)
