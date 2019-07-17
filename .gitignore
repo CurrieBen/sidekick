@@ -2,3 +2,5 @@
 build/
 dist/
 side_kick.egg-info/
+.idea/codeStyles/Project.xml
+.idea/dbnavigator.xml
