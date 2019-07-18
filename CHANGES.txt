@@ -6,3 +6,4 @@ v 0.1.3, 11-02-2019 -- Pre delete function added to handle the deleting of a cro
 v 0.1.4, 12-02-2019 -- Edited Task model to allow null relationship with cron schedule and registered task
 v 0.1.8, 05-03-2019 -- Updated migration 0002 as had typo in cron schedule, was missing * before
 v 0.1.9, 16-07-2019 -- Added started_at, finished_at and status fields to the Task model
+v 0.1.12, 18-07-2019 -- Edited update_status function to correctly find task based on registered task name

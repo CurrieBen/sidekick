@@ -7,7 +7,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setuptools.setup(
     name="side-kick",
-    version="0.1.11",
+    version="0.1.12",
     author="Ben Currie",
     author_email="benjamin.w.currie@gmail.com",
     description="A lightweight task runner for django with easy admin controls",

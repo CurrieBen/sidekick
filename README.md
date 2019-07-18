@@ -134,7 +134,7 @@ Within ``customers.py`` (or whatever your app is) add the following:
 
             if RegisteredTask.objects.filter(task_name=rt_task_name):
                 try:
-                    CronTask(task_name=task_name, app=app_name).run()
+                    CronTask(task_name=task_name, registered_task_name=rt_task_name, app=app_name).run()
                 except Exception as e:
                     logger.error(msg=e)
 

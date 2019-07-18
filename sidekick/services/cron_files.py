@@ -49,7 +49,7 @@ class CronService:
             self.write_cron_file(tasks=tasks)
             sleeping_tasks = Task.objects.filter(enabled=False)
             for st in sleeping_tasks:
-                update_task_status(task_name=st.name, status=Task.SLEEPING)
+                update_task_status(registered_task_name=st.registered_task.task_name, status=Task.SLEEPING)
             logger.info(msg='Cron tasks successfully created.')
         except Exception as e:
             logger.error(msg='Failed to write cron tasks due to {}'.format(e))

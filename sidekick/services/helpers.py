@@ -24,12 +24,15 @@ def get_app_name(name):
     return name.split('.')[-1]
 
 
-def update_task_status(task_name, status):
+def update_task_status(registered_task_name, status):
     """Update the status, started_at and finished_at fields"""
 
     if status == Task.IN_PROGRESS:
-        Task.objects.filter(name=task_name).update(status=status, started_at=datetime.now(timezone.utc))
+        Task.objects.filter(registered_task__task_name=registered_task_name).update(
+            status=status, started_at=datetime.now(timezone.utc))
     elif status in {Task.SUCCESS, Task.FAILED}:
-        Task.objects.filter(name=task_name).update(status=status, finished_at=datetime.now(timezone.utc))
+        Task.objects.filter(registered_task__task_name=registered_task_name).update(
+            status=status, finished_at=datetime.now(timezone.utc))
     else:
-        Task.objects.filter(name=task_name).update(status=status, started_at=None, finished_at=None)
+        Task.objects.filter(registered_task__task_name=registered_task_name).update(
+            status=status, started_at=None, finished_at=None)

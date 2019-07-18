@@ -3,6 +3,7 @@ import logging
 import importlib
 from django.conf import settings
 from sidekick.services.helpers import update_task_status
+from sidekick.models import Task
 
 logger = logging.getLogger(__name__)
 
@@ -10,14 +11,18 @@ logger = logging.getLogger(__name__)
 class CronTask:
     """Helpers for cron tasks """
 
-    def __init__(self, task_name, app):
-        """Initialise variables and paths for CronTask class
+    def __init__(self, task_name, registered_task_name, app):
+        """
+        Initialise variables and paths for CronTask class
 
         :param task_name: Name of task to run, will be displayed in lock files
+        :param registered_task_name: Name of the registered task, used to update status
+        :param app: Name of the app
         """
         if getattr(settings, "SIDEKICK")['LOCK_PATH']:
             self.app = app
             self.task_name = task_name
+            self.registered_task_name = registered_task_name
             self.lock_path = settings.SIDEKICK['LOCK_PATH']
             self.lock_file = os.path.join(self.lock_path, '{}.lock'.format(self.task_name))
         else:
@@ -31,16 +36,16 @@ class CronTask:
         if not self.lock_file_exists():
             self.create_lock_file()
 
-            update_task_status(task_name=self.task_name, status='IN_PROGRESS')
+            update_task_status(registered_task_name=self.registered_task_name, status=Task.IN_PROGRESS)
             try:
                 app_task = self.app + '.tasks'
                 importlib.import_module("%s" % app_task)
                 # call the function using the getattr function
                 getattr(importlib.import_module("%s" % app_task), self.task_name)()
-                update_task_status(task_name=self.task_name, status='SUCCESS')
+                update_task_status(registered_task_name=self.registered_task_name, status=Task.SUCCESS)
                 logger.info(msg='Successfully ran {}'.format(self.task_name))
             except Exception as e:
-                update_task_status(task_name=self.task_name, status='FAILED')
+                update_task_status(registered_task_name=self.registered_task_name, status=Task.FAILED)
                 logger.error(msg=e)
             self.delete_lock_file()
 
