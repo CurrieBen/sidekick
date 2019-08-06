@@ -7,6 +7,7 @@ class SidekickConfig(AppConfig):
 
     def ready(self):
         self.register_tasks()
+        self.clean_up_old_lock_files()
 
     @staticmethod
     def register_tasks():
