@@ -47,7 +47,8 @@ class CronTask:
             except Exception as e:
                 update_task_status(registered_task_name=self.registered_task_name, status=Task.FAILED)
                 logger.error(msg=e)
-            self.delete_lock_file()
+            finally:
+                self.delete_lock_file()
 
     def create_lock_file(self):
         """

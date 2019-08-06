@@ -58,7 +58,10 @@ class Task(models.Model):
             prefix = "Running for"
         elif self.started_at and self.finished_at:
             difference = self.finished_at - self.started_at
-            prefix = "Completed in"
+            if self.status == self.FAILED:
+                prefix = "Failed after"
+            else:
+                prefix = "Completed in"
         else:
             return "Not currently running."
         days, seconds = difference.days, difference.seconds
