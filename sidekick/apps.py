@@ -1,5 +1,6 @@
 from django.apps import AppConfig
 from django.conf import settings
+from django.db import connection
 
 
 class SidekickConfig(AppConfig):
@@ -7,7 +8,8 @@ class SidekickConfig(AppConfig):
 
     def ready(self):
         self.register_tasks()
-        self.clean_up_old_lock_files()
+        if 'sidekick_registeredtask' in connection.introspection.table_names():
+            self.clean_up_old_lock_files()
 
     @staticmethod
     def register_tasks():
