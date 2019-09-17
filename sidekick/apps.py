@@ -1,6 +1,5 @@
 from django.apps import AppConfig
 from django.conf import settings
-from django.db import connection
 
 
 class SidekickConfig(AppConfig):
@@ -8,8 +7,6 @@ class SidekickConfig(AppConfig):
 
     def ready(self):
         self.register_tasks()
-        if 'sidekick_registeredtask' in connection.introspection.table_names():
-            self.clean_up_old_lock_files()
 
     @staticmethod
     def register_tasks():
@@ -25,19 +22,3 @@ class SidekickConfig(AppConfig):
         except Exception as e:
             print("Failed to register tasks for Side Kick. Make sure you have SIDEKICK_REGISTERED_APPS within"
                   " the SIDEKICK dictionary.")
-
-    @staticmethod
-    def clean_up_old_lock_files():
-        """
-        If the server has just been restarted, check if there are any old lock files and if so remove them
-        :return:
-        """
-        import os
-        from .models import RegisteredTask
-
-        for task in RegisteredTask.objects.all():
-            lock_path = settings.SIDEKICK['LOCK_PATH']
-            lock_file_name = "{name}.lock".format(name=task.task_name.split("--")[1])
-            path = os.path.join(lock_path, lock_file_name)
-            if os.path.exists(path):
-                os.remove(path)
